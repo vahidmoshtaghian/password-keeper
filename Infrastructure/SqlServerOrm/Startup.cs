@@ -1,6 +1,6 @@
 ﻿namespace SqlServerOrm
 {
-    public class Class1
+    public class Startup
     {
 
     }
