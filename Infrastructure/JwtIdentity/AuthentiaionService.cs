@@ -41,7 +41,7 @@ public class AuthentiaionService : IIdentityService
             new Claim("id", user.Id.ToString()),
             new Claim("firstName", user.FirstName),
             new Claim("lastName", user.LastName),
-            new Claim("mobile", user.Mobile),
+            new Claim("mobile", user.Phone),
             new Claim("email", user.Email),
             new Claim("status", user.Status.ToString()),
             new Claim("verify", (user.VerifyCodeDate != null).ToString()),

@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ApiGateway.Controllers.Base;
+using Application.UserArea.Command;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers.UserArea;
 
-public class AccountController : ControllerBase
+public class AccountController : ApplicationController
 {
+    [AllowAnonymous]
     [HttpPost("sign-up")]
-    public async Task SignUp()
+    public async Task<SignUpCommandResponse> SignUp([FromBody] SignUpCommand command)
     {
-        throw new NotImplementedException();
+        var result = await Mediator.Send(command);
+
+        return result;
     }
 
     [AllowAnonymous]

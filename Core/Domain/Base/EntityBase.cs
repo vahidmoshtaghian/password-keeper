@@ -11,5 +11,5 @@ public class EntityBase
 
     [Key]
     public long Id { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; private set; }
 }
