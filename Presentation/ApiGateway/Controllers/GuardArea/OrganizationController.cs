@@ -18,11 +18,31 @@ public class OrganizationController : ApplicationController
         return result;
     }
 
+    [HttpGet("{id:long}")]
+    public async Task<GetOrganizationByIdQueryResponse> GetById([FromRoute] long id)
+    {
+        var result = await Mediator.Send(new GetOrganizationByIdQuery() { Id = id });
+
+        return result;
+    }
+
     [HttpPost]
     public async Task<AddOrganizationCommandResponse> Add([FromBody] AddOrganizationCommand command)
     {
         var result = await Mediator.Send(command);
 
         return result;
+    }
+
+    [HttpPut("{id:long}")]
+    public async Task Update([FromRoute] long id, [FromBody] object command)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpDelete("{id:long}")]
+    public async Task Delete([FromRoute] long id)
+    {
+        throw new NotImplementedException();
     }
 }
