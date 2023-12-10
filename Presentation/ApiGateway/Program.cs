@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerLibrary();
 
 builder.Services.AddApplication();
 builder.Services.AddJwtIdentity(builder.Configuration.GetSection("Identity:Token").Value);
@@ -23,8 +23,7 @@ app.UseExceptionHandler(ApplicationExceptionHandler.Options);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerLibrary();
 }
 
 app.UseHttpsRedirection();

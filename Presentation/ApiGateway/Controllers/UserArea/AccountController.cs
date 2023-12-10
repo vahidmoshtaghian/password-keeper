@@ -1,10 +1,12 @@
 ﻿using ApiGateway.Controllers.Base;
+using ApiGateway.Extensions;
 using Application.UserArea.Command;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers.UserArea;
 
+[ApiExplorerSettings(GroupName = SwaggerDefinition.UserArea)]
 public class AccountController : ApplicationController
 {
     [AllowAnonymous]
