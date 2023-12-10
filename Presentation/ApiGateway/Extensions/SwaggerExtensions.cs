@@ -54,6 +54,7 @@ public static class SwaggerExtensions
 public class SwaggerDefinition
 {
     public const string UserArea = "User Area";
+    public const string GuardArea = "Guard Area";
 
     public static string[] GetAll()
     {
