@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Base;
+﻿#nullable disable
+
+using Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

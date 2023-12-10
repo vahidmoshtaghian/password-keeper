@@ -1,4 +1,7 @@
-﻿using Domain.Base;
+﻿#nullable disable
+
+using Domain.Base;
+using Domain.Entities.Guard;
 using Domain.Enums;
 using Domain.Utilities;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +30,8 @@ public class User : Person, IUpdatable, IDeletable
     public DateTime? VerifyCodeDate { get; private set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+
+    public ICollection<Membership> Memberships { get; set; }
 
     public void Block()
     {
