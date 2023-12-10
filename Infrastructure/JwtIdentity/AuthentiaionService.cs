@@ -39,10 +39,7 @@ public class AuthentiaionService : IIdentityService
         List<Claim> claims = new()
         {
             new Claim("id", user.Id.ToString()),
-            new Claim("firstName", user.FirstName),
-            new Claim("lastName", user.LastName),
-            new Claim("mobile", user.Phone),
-            new Claim("email", user.Email),
+            new Claim("fullName", user.FullName),
             new Claim("status", user.Status.ToString()),
             new Claim("verify", (user.VerifyCodeDate != null).ToString()),
         };

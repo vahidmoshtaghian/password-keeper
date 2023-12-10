@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
-builder.Services.AddJwtIdentity("000000000000");
+builder.Services.AddJwtIdentity(builder.Configuration.GetSection("Identity:Token").Value);
 builder.Services.AddSqlServerOrm(builder.Configuration.GetConnectionString("Default"));
 
 var app = builder.Build();

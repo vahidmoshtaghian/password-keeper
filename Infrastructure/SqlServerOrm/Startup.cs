@@ -1,5 +1,5 @@
 ﻿using Domain.Contracts;
-using Domain.Exceptions;
+using Domain.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

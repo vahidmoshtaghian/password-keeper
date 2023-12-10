@@ -18,8 +18,18 @@ public class AccountController : ApplicationController
 
     [AllowAnonymous]
     [HttpPost("sign-in")]
-    public async Task SignIn()
+    public async Task<SignInCommandResponse> SignIn([FromBody] SignInCommand command)
     {
-        throw new NotImplementedException();
+        var result = await Mediator.Send(command);
+
+        return result;
+    }
+
+    [HttpPost("refresh")]
+    public async Task<RefreshCommandResponse> Refresh([FromBody] RefreshCommand command)
+    {
+        var result = await Mediator.Send(command);
+
+        return result;
     }
 }

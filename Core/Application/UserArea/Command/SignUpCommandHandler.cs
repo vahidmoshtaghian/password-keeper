@@ -28,7 +28,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpCommand
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new() { Token = token };
+        return new() { Token = token, Refresh = entity.RefreshToken };
     }
 }
 
@@ -54,7 +54,6 @@ public class SignUpCommand : IRequest<SignUpCommandResponse>
     }
 }
 
-public class SignUpCommandResponse
+public class SignUpCommandResponse : SignInCommandResponse
 {
-    public string Token { get; internal set; }
 }

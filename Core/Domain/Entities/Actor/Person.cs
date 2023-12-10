@@ -15,4 +15,7 @@ public class Person : EntityBase
 
     [Required, MinLength(11), MaxLength(11), Phone]
     public string Phone { get; set; }
+
+    [NotMapped]
+    public string FullName => $"{FirstName} {LastName}";
 }

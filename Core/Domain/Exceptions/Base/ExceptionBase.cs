@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace Domain.Exceptions.Base;
+﻿namespace Domain.Exceptions.Base;
 
 public class ExceptionBase : HttpRequestException
 {
