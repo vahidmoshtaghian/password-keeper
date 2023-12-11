@@ -18,7 +18,7 @@ public class User : Person, IUpdatable, IDeletable
         Status = UserStatus.Normal;
     }
 
-    public UserStatus Status { get; private set; }
+    public UserStatus Status { get; set; }
 
     [MinLength(2), MaxLength(100), EmailAddress]
     public string Email { get; set; }
@@ -33,16 +33,6 @@ public class User : Person, IUpdatable, IDeletable
 
     public ICollection<Membership> Memberships { get; set; }
     public ICollection<Friend> Friends { get; set; }
-
-    public void Block()
-    {
-        Status = UserStatus.Block;
-    }
-
-    public void UnBlock()
-    {
-        Status = UserStatus.Normal;
-    }
 
     public void SetPassword(string password)
     {

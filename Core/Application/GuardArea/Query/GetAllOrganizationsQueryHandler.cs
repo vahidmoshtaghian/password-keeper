@@ -19,14 +19,14 @@ public class GetAllOrganizationsQueryHandler : IRequestHandler<GetAllOrganizatio
 
     public async Task<PaginateList<GetAllOrganizationsQueryResponse>> Handle(GetAllOrganizationsQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<Membership> query = _context.Set<Membership>()
+        var (entities, count) = await _context.Set<Membership>()
             .Where(p =>
                 p.UserId == _currentUser.Id &&
                 (string.IsNullOrEmpty(request.Search) || p.Organization.Title.Contains(request.Search)))
             .Include(p => p.Organization)
-            .OrderBy(p => p.Organization.Title);
+            .OrderBy(p => p.Organization.Title)
+            .ToListPaginateAsync(request.Page, request.PageSize);
 
-        var (entities, count) = await query.ToListPaginateAsync(request.Page, request.PageSize);
         var result = entities.Select(p => new GetAllOrganizationsQueryResponse(p));
 
         return new(result, count, request.PageSize);

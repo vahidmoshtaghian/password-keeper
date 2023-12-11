@@ -25,7 +25,7 @@ public class AddOrganizationCommandHandler : IRequestHandler<AddOrganizationComm
             p.IsOwner == true &&
             p.Organization.Title == request.Title);
         if (duplicate)
-            throw new DuplicateEntityException("Organization");
+            throw new DuplicateException("Organization");
 
         var entity = request.MapToDomain(_currentUser.Id);
         _context.Set<Organization>().Add(entity);
