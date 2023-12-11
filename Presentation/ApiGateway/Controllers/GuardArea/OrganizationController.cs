@@ -35,14 +35,16 @@ public class OrganizationController : ApplicationController
     }
 
     [HttpPut("{id:long}")]
-    public async Task Update([FromRoute] long id, [FromBody] object command)
+    public async Task Update([FromRoute] long id, [FromBody] UpdateOrganizationCommand command)
     {
-        throw new NotImplementedException();
+        command.SetId(id);
+
+        await Mediator.Send(command);
     }
 
     [HttpDelete("{id:long}")]
     public async Task Delete([FromRoute] long id)
     {
-        throw new NotImplementedException();
+        await Mediator.Send(new DeleteOrganizationCommand() { Id = id });
     }
 }

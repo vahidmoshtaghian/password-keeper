@@ -3,8 +3,6 @@ using Domain.Base;
 using Domain.Contracts;
 using Domain.Entities.Guard;
 using Domain.Exceptions.GuardExceptions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.GuardArea.Command;
 

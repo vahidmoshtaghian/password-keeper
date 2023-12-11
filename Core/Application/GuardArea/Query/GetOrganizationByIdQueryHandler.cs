@@ -1,9 +1,6 @@
 ﻿using Domain.Base;
 using Domain.Contracts;
 using Domain.Entities.Guard;
-using Domain.Exceptions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.GuardArea.Query;
 

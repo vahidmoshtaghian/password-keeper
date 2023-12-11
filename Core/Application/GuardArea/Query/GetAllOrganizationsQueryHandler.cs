@@ -3,8 +3,6 @@ using Domain.Base.PaginageDto;
 using Domain.Contracts;
 using Domain.Entities.Guard;
 using Domain.Extensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.GuardArea.Query;
 
@@ -44,6 +42,11 @@ public class GetAllOrganizationsQuery : PaginateQuery, IRequest<PaginateList<Get
 
 public class GetAllOrganizationsQueryResponse
 {
+    public GetAllOrganizationsQueryResponse()
+    {
+
+    }
+
     public GetAllOrganizationsQueryResponse(Membership entity)
     {
         Id = entity.OrganizationId;
