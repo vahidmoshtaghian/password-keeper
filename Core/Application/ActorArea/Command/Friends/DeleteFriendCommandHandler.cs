@@ -18,7 +18,7 @@ public class DeleteFriendCommandHandler : IRequestHandler<DeleteFriendCommand>
     public async Task Handle(DeleteFriendCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Set<Friend>()
-            .FirstOrDefaultAsync(p => p.Id == request.Id && p.UserId == _currentUser.Id, cancellationToken);
+            .FirstOrDefaultAsync(p => p.Id == request.Id && p.OwnerId == _currentUser.Id, cancellationToken);
         if (entity is null)
             throw new NotFoundException("Friend");
         _context.Set<Friend>().Remove(entity);

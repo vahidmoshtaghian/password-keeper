@@ -3,6 +3,7 @@ using Domain.Base;
 using Domain.Contracts;
 using Domain.Entities.Actor;
 using Domain.Enums;
+using System.Net;
 
 namespace Application.ActorArea.Command.Friends;
 
@@ -19,6 +20,11 @@ public class AddFriendCommandHandler : IRequestHandler<AddFriendCommand, AddFrie
 
     public async Task<AddFriendCommandResponse> Handle(AddFriendCommand request, CancellationToken cancellationToken)
     {
+        var isYourself = await _context.Set<User>()
+            .AnyAsync(p => p.Id == _currentUser.Id && p.Phone == request.Phone);
+        if (isYourself)
+            throw new CustomException("This is you!", HttpStatusCode.Conflict);
+
         var exists = await _context.Set<Friend>()
             .AnyAsync(p => p.User.Phone == request.Phone && p.UserId == _currentUser.Id);
         if (exists)
@@ -29,6 +35,8 @@ public class AddFriendCommandHandler : IRequestHandler<AddFriendCommand, AddFrie
         user ??= request.MapToUser();
 
         var entity = request.MapToFriend(user);
+        entity.OwnerId = _currentUser.Id;
+
         _context.Set<Friend>().Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);

@@ -15,6 +15,11 @@ public class Friend : EntityBase
     [Required, MinLength(2), MaxLength(100)]
     public string LastName { get; set; }
 
+    [ForeignKey(nameof(Owner))]
+    public long OwnerId { get; set; }
+
+    public User Owner { get; set; }
+
     [ForeignKey(nameof(User))]
     public long UserId { get; set; }
 

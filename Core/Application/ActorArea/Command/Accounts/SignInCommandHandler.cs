@@ -35,6 +35,8 @@ public class SignInCommandHandler : IRequestHandler<SignInCommand, SignInCommand
     }
 }
 
+#nullable disable
+
 public class SignInCommand : IRequest<SignInCommandResponse>
 {
     public string Phone { get; set; }

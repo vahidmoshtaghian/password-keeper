@@ -34,6 +34,17 @@ internal class ApplicationDbContext : DbContext, IContext
     {
         // TODO Deleted items query filter
 
+        modelBuilder.Entity<Friend>()
+            .HasOne(p => p.Owner)
+            .WithMany(p => p.Friends)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Friend>()
+            .HasOne(p => p.User)
+            .WithOne(p => p.Friend)
+            .HasForeignKey<Friend>(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         base.OnModelCreating(modelBuilder);
     }
 

@@ -21,7 +21,7 @@ public class GetFriendByIdQueryHandler : IRequestHandler<GetFriendByIdQuery, Get
             .Include(p => p.User)
             .FirstOrDefaultAsync(p =>
                 p.Id == request.Id &&
-                p.UserId == _currentUser.Id, cancellationToken);
+                p.OwnerId == _currentUser.Id, cancellationToken);
         if (entity is null)
             throw new NotFoundException("Friend");
         var result = new GetFriendByIdQueryResponse(entity);

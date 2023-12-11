@@ -21,10 +21,11 @@ public class GetAllFriendsQueryHandler : IRequestHandler<GetAllFriendsQuery, Pag
     {
         var (entities, count) = await _context.Set<Friend>()
             .Where(p =>
-                p.UserId == _currentUser.Id &&
+                p.OwnerId == _currentUser.Id &&
                 (string.IsNullOrEmpty(request.Search) ||
                 p.FirstName.Contains(request.Search) ||
                 p.LastName.Contains(request.Search)))
+            .Include(p => p.User)
             .OrderBy(p => p.FirstName)
             .ThenBy(p => p.LastName)
             .ToListPaginateAsync(request.Page, request.PageSize);
@@ -33,6 +34,8 @@ public class GetAllFriendsQueryHandler : IRequestHandler<GetAllFriendsQuery, Pag
         return new(result, count, request.PageSize);
     }
 }
+
+#nullable disable
 
 public class GetAllFriendsQuery : PaginateQuery, IRequest<PaginateList<GetAllFriendsQueryResponse>>
 {
@@ -45,7 +48,7 @@ public class GetAllFriendsQueryResponse
     {
         Id = entity.Id;
         FullName = entity.FullName;
-        Phone = entity.User.Phone;
+        Phone = entity.User?.Phone;
     }
 
     public long Id { get; set; }

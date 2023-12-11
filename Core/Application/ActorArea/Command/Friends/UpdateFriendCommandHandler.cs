@@ -21,7 +21,7 @@ public class UpdateFriendCommandHandler : IRequestHandler<UpdateFriendCommand>
         var entity = await _context.Set<Friend>()
             .FirstOrDefaultAsync(p =>
                 p.Id == request.Id &&
-                p.UserId == _currentUser.Id, cancellationToken);
+                p.OwnerId == _currentUser.Id, cancellationToken);
         if (entity is null)
             throw new NotFoundException("Friend");
 
@@ -40,7 +40,6 @@ public class UpdateFriendCommand : IRequest
     internal long Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string Phone { get; set; }
 
     public void SetId(long id)
     {

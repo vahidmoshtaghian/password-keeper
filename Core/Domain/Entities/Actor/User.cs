@@ -31,6 +31,11 @@ public class User : Person, IUpdatable, IDeletable
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
 
+    [ForeignKey(nameof(Friend))]
+    public long FriendId { get; set; }
+
+    public Friend Friend { get; set; }
+
     public ICollection<Membership> Memberships { get; set; }
     public ICollection<Friend> Friends { get; set; }
 

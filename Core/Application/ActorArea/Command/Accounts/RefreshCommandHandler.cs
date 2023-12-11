@@ -40,6 +40,8 @@ public class RefreshCommandHandler : IRequestHandler<RefreshCommand, RefreshComm
     }
 }
 
+#nullable disable
+
 public class RefreshCommand : IRequest<RefreshCommandResponse>
 {
     public string RefreshToken { get; set; }
