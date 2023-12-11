@@ -1,9 +1,7 @@
 ﻿using Domain.Contracts;
 using Domain.Entities.Actor;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
-namespace Application.UserArea.Command;
+namespace Application.ActorArea.Command.Account;
 
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpCommandResponse>
 {

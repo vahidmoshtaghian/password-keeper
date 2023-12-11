@@ -3,5 +3,6 @@
 public enum UserStatus : byte
 {
     Block,
-    Normal
+    Normal,
+    UnRegistered
 }

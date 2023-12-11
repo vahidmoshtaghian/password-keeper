@@ -21,9 +21,9 @@ public class User : Person, IUpdatable, IDeletable
     public UserStatus Status { get; private set; }
 
     [MinLength(2), MaxLength(100), EmailAddress]
-    public string? Email { get; set; }
+    public string Email { get; set; }
     public string Password { get; private set; }
-    public string? RefreshToken { get; private set; }
+    public string RefreshToken { get; private set; }
     public DateTime? RefreshTokenExpire { get; private set; }
     public int? VerifyCode { get; private set; }
     public DateTime? VerifyCodeExpire { get; private set; }

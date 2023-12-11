@@ -2,10 +2,8 @@
 using Domain.Contracts;
 using Domain.Entities.Actor;
 using Domain.Exceptions.UserExceptions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
-namespace Application.UserArea.Command;
+namespace Application.ActorArea.Command.Account;
 
 public class RefreshCommandHandler : IRequestHandler<RefreshCommand, RefreshCommandResponse>
 {
