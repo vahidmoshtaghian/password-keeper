@@ -1,6 +1,6 @@
 ﻿using ApiGateway.Controllers.Base;
 using ApiGateway.Extensions;
-using Application.UserArea.Command;
+using Application.ActorArea.Command.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -14,6 +14,7 @@ internal class ApplicationDbContext : DbContext, IContext
 
     #region Actor
 
+    public DbSet<Friend> Friends { get; set; }
     public DbSet<Person> People { get; set; }
     public DbSet<User> Users { get; set; }
 
@@ -32,6 +33,17 @@ internal class ApplicationDbContext : DbContext, IContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // TODO Deleted items query filter
+
+        modelBuilder.Entity<Friend>()
+            .HasOne(p => p.Owner)
+            .WithMany(p => p.Friends)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Friend>()
+            .HasOne(p => p.User)
+            .WithOne(p => p.Friend)
+            .HasForeignKey<Friend>(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         base.OnModelCreating(modelBuilder);
     }

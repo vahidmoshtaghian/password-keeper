@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SqlServerOrm;
 
@@ -11,9 +12,11 @@ using SqlServerOrm;
 namespace SqlServerOrm.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231211161559_AddFriendsOfUser")]
+    partial class AddFriendsOfUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,18 +46,12 @@ namespace SqlServerOrm.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long>("OwnerId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Friends", "Actor");
                 });
@@ -232,9 +229,6 @@ namespace SqlServerOrm.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long>("FriendId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -264,19 +258,11 @@ namespace SqlServerOrm.Migrations
 
             modelBuilder.Entity("Domain.Entities.Actor.Friend", b =>
                 {
-                    b.HasOne("Domain.Entities.Actor.User", "Owner")
-                        .WithMany("Friends")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Actor.User", "User")
-                        .WithOne("Friend")
-                        .HasForeignKey("Domain.Entities.Actor.Friend", "UserId")
+                        .WithMany("Friends")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Owner");
 
                     b.Navigation("User");
                 });
@@ -368,8 +354,6 @@ namespace SqlServerOrm.Migrations
 
             modelBuilder.Entity("Domain.Entities.Actor.User", b =>
                 {
-                    b.Navigation("Friend");
-
                     b.Navigation("Friends");
 
                     b.Navigation("Memberships");

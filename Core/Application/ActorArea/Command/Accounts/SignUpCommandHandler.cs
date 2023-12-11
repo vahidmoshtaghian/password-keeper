@@ -1,9 +1,7 @@
 ﻿using Domain.Contracts;
 using Domain.Entities.Actor;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
-namespace Application.UserArea.Command;
+namespace Application.ActorArea.Command.Account;
 
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpCommandResponse>
 {
@@ -24,13 +22,16 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpCommand
         var entity = request.MapToDomain();
         entity.SetRefreshToken(_identityService.CreateRefreshToken());
         _context.Set<User>().Add(entity);
-        var token = _identityService.CreateToken(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        var token = _identityService.CreateToken(entity);
 
         return new() { Token = token, Refresh = entity.RefreshToken };
     }
 }
+
+#nullable disable
 
 public class SignUpCommand : IRequest<SignUpCommandResponse>
 {
