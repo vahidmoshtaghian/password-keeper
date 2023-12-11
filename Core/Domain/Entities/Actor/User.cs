@@ -32,6 +32,7 @@ public class User : Person, IUpdatable, IDeletable
     public DateTime? DeletedAt { get; set; }
 
     public ICollection<Membership> Memberships { get; set; }
+    public ICollection<Friend> Friends { get; set; }
 
     public void Block()
     {

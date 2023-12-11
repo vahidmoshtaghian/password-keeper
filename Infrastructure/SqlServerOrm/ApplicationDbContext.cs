@@ -14,6 +14,7 @@ internal class ApplicationDbContext : DbContext, IContext
 
     #region Actor
 
+    public DbSet<Friend> Friends { get; set; }
     public DbSet<Person> People { get; set; }
     public DbSet<User> Users { get; set; }
 
