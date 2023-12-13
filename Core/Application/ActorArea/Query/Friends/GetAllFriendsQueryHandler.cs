@@ -46,6 +46,8 @@ public class GetAllFriendsQueryResponse
 {
     public GetAllFriendsQueryResponse(Friend entity)
     {
+        if (entity is null) return;
+
         Id = entity.Id;
         FullName = entity.FullName;
         Phone = entity.User?.Phone;
