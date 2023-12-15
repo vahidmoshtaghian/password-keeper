@@ -1,7 +1,5 @@
-﻿using Application.ActorArea.Query.Friends;
-using Domain.Base;
+﻿using Domain.Base;
 using Domain.Contracts;
-using Domain.Entities.Actor;
 using Domain.Entities.Guard;
 
 namespace Application.GuardArea.Query;
@@ -24,10 +22,10 @@ public class GetOrganizationMembershipsQueryHandler : IRequestHandler<GetOrganiz
             .Include(p => p.User.Friends.Where(x => x.OwnerId == _currentUser.Id))
             .ThenInclude(p => p.User)
             .ToListAsync(cancellationToken);
-        // maybe friend is null here! 
-        //var result = entities.Select(p => new GetOrganizationMembershipQueryResponse(p));
 
-        return null;
+        var result = entities.Select(p => new GetOrganizationMembershipQueryResponse(p));
+
+        return result;
     }
 }
 
@@ -36,9 +34,23 @@ public class GetOrganizationMembershipsQuery : IRequest<IEnumerable<GetOrganizat
     public long Id { get; set; }
 }
 
-public class GetOrganizationMembershipQueryResponse : GetAllFriendsQueryResponse
+public class GetOrganizationMembershipQueryResponse
 {
-    public GetOrganizationMembershipQueryResponse(Friend entity) : base(entity)
+    public GetOrganizationMembershipQueryResponse(Membership entity)
     {
+        if (!entity.User.Friends.Any())
+        {
+            FullName = entity.User.LastName;
+
+            return;
+        }
+
+        Id = entity.User.Friends.First().Id;
+        FullName = entity.User.Friends.First().FullName;
+        Phone = entity.User.Phone;
     }
+
+    public long Id { get; set; }
+    public string FullName { get; set; }
+    public string Phone { get; set; }
 }
