@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\AesEncryptor\AesEncryptor.csproj" />
     <ProjectReference Include="..\..\Infrastructure\JwtIdentity\JwtIdentity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SqlServerOrm\SqlServerOrm.csproj" />
   </ItemGroup>
