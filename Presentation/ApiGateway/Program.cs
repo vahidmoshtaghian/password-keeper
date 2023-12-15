@@ -1,3 +1,4 @@
+using AesEncryptor;
 using ApiGateway.Extensions;
 using Application;
 using JwtIdentity;
@@ -14,8 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerLibrary();
 
 builder.Services.AddApplication();
-builder.Services.AddJwtIdentity(builder.Configuration.GetSection("Identity:Token").Value);
+builder.Services.AddJwtIdentity(builder.Configuration["Identity:Token"]);
 builder.Services.AddSqlServerOrm(builder.Configuration.GetConnectionString("Default"));
+builder.Services.AddAesEncryptor(builder.Configuration["AesEncryptor:Key"]);
 
 var app = builder.Build();
 

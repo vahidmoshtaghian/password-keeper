@@ -13,7 +13,7 @@ public static class Startup
 {
     internal static string SecretKey = string.Empty;
 
-    public static void AddJwtIdentity(this IServiceCollection services, string secretKey)
+    public static void AddJwtIdentity(this IServiceCollection services, string? secretKey)
     {
         SecretKey = secretKey;
         services.AddScoped<IIdentityService, AuthentiaionService>();
