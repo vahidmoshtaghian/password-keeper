@@ -47,4 +47,24 @@ public class OrganizationController : ApplicationController
     {
         await Mediator.Send(new DeleteOrganizationCommand() { Id = id });
     }
+
+    [HttpGet("{Id:long}/user")]
+    public async Task<IEnumerable<GetOrganizationMembershipQueryResponse>> GetOrganiztionUsers([FromRoute] GetOrganizationMembershipsQuery command)
+    {
+        var result = await Mediator.Send(command);
+
+        return result;
+    }
+
+    [HttpPost("{Id:long}/user/{FriendId:long}")]
+    public async Task AddUser([FromRoute] AddMembershipCommand command)
+    {
+        await Mediator.Send(command);
+    }
+
+    [HttpDelete("{Id:long}/user/{FriendId:long}")]
+    public async Task DeleteUser([FromRoute] DeleteMembershipCommand command)
+    {
+        await Mediator.Send(command);
+    }
 }

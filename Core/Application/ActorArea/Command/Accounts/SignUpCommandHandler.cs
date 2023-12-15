@@ -1,5 +1,6 @@
 ﻿using Domain.Contracts;
 using Domain.Entities.Actor;
+using Domain.Enums;
 
 namespace Application.ActorArea.Command.Account;
 
@@ -16,12 +17,16 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, SignUpCommand
 
     public async Task<SignUpCommandResponse> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var emailExists = await _context.Set<User>()
-            .AnyAsync(p => p.Phone == request.Phone, cancellationToken);
+        var entity = await _context.Set<User>()
+            .FirstOrDefaultAsync(p => p.Phone == request.Phone, cancellationToken);
 
-        var entity = request.MapToDomain();
+        entity = request.MapToDomain(entity);
         entity.SetRefreshToken(_identityService.CreateRefreshToken());
-        _context.Set<User>().Add(entity);
+
+        if (entity.Id == 0)
+            _context.Set<User>().Add(entity);
+        else
+            _context.Set<User>().Update(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 
@@ -40,14 +45,15 @@ public class SignUpCommand : IRequest<SignUpCommandResponse>
     public string Phone { get; set; }
     public string Password { get; set; }
 
-    internal User MapToDomain()
+    internal User MapToDomain(User user)
     {
-        User user = new()
+        user ??= new()
         {
             FirstName = FirstName,
             LastName = LastName,
             Phone = Phone
         };
+        user.Status = UserStatus.Normal;
         user.SetPassword(Password);
         user.GenerateVerificationCode();
 
