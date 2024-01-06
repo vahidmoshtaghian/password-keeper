@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SqlServerOrm;
 
-internal class ApplicationDbContext : DbContext, IContext
+public class ApplicationDbContext : DbContext, IContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
