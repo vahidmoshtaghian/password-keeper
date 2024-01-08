@@ -2,7 +2,6 @@
 using Domain.Base;
 using Domain.Contracts;
 using Domain.Entities.Guard;
-using Domain.Exceptions.GuardExceptions;
 
 namespace Application.GuardArea.Command;
 
@@ -22,8 +21,8 @@ public class AddOrganizationCommandHandler : IRequestHandler<AddOrganizationComm
         var duplicate = await _context.Set<Membership>()
             .AnyAsync(p =>
             p.UserId == _currentUser.Id &&
-            p.IsOwner == true &&
-            p.Organization.Title == request.Title);
+            p.IsOwner &&
+            p.Organization.Title == request.Title, cancellationToken);
         if (duplicate)
             throw new DuplicateException("Organization");
 
