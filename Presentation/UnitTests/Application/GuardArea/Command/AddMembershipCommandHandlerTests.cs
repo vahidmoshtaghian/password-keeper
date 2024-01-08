@@ -39,7 +39,7 @@ public class AddMembershipCommandHandlerTests : IClassFixture<ContextInitializer
         friend.OwnerId = _currentUser.Id;
         friend.Owner = current;
 
-        organization.Id = command.Id;
+        organization.Id = command.OrganizationId;
         organization.Memberships = new List<Membership>
         {
             new()
@@ -84,7 +84,7 @@ public class AddMembershipCommandHandlerTests : IClassFixture<ContextInitializer
         friend.OwnerId = _currentUser.Id;
         friend.Owner = current;
 
-        organization.Id = command.Id;
+        organization.Id = command.OrganizationId;
         organization.Memberships = new List<Membership>
         {
             new()
@@ -125,7 +125,7 @@ public class AddMembershipCommandHandlerTests : IClassFixture<ContextInitializer
         friend.UserId = user.Id;
         friend.OwnerId = _currentUser.Id;
         friend.User = current;
-        organization.Id = command.Id;
+        organization.Id = command.OrganizationId;
         organization.Memberships = new List<Membership>
         {
             new()

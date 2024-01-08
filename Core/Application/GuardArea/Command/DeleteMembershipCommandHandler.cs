@@ -28,7 +28,7 @@ public class DeleteMembershipCommandHandler : IRequestHandler<DeleteMembershipCo
 
         var membership = await _context.Set<Membership>()
             .FirstOrDefaultAsync(p =>
-                p.OrganizationId == request.Id &&
+                p.OrganizationId == request.OrganizationId &&
                 p.UserId == user.Id, cancellationToken);
         if (membership is null)
             throw new NotFoundException("Member");
@@ -37,7 +37,7 @@ public class DeleteMembershipCommandHandler : IRequestHandler<DeleteMembershipCo
             .AnyAsync(p =>
                 p.IsOwner &&
                 p.UserId == _currentUser.Id &&
-                p.OrganizationId == request.Id, cancellationToken);
+                p.OrganizationId == request.OrganizationId, cancellationToken);
         if (!isOwner)
             throw new OwnerException();
 
