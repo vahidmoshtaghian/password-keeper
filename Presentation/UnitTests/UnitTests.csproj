@@ -39,8 +39,4 @@
 		<ProjectReference Include="..\ApiGateway\ApiGateway.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Application\GuardArea\Query\" />
-	</ItemGroup>
-
 </Project>
