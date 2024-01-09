@@ -6,13 +6,13 @@ using Domain.Exceptions.GuardExceptions;
 
 namespace UnitTests.Application.GuardArea.Command;
 
-public class DeleteOrganizationCommandHandlerTests : IClassFixture<ContextInitializer>
+public class UpdateOrganizationCommandHandlerTests : IClassFixture<ContextInitializer>
 {
     private readonly CurrentUser _currentUser;
     private readonly ApplicationInMemoryDbContext _context;
-    private readonly DeleteOrganizationCommandHandler _handler;
+    private readonly UpdateOrganizationCommandHandler _handler;
 
-    public DeleteOrganizationCommandHandlerTests(ContextInitializer initializer)
+    public UpdateOrganizationCommandHandlerTests(ContextInitializer initializer)
     {
         _currentUser = initializer.CurrentUser;
         _context = new();
@@ -20,35 +20,38 @@ public class DeleteOrganizationCommandHandlerTests : IClassFixture<ContextInitia
     }
 
     [Theory, FixtureData]
-    public async Task DeleteOrganization_ShouldDelete(DeleteOrganizationCommand command)
+    public async Task UpdateOrganization_ShouldUpdate(UpdateOrganizationCommand expected, long id)
     {
         // Arrange
+        expected.SetId(id);
         Membership membership = new()
         {
-            OrganizationId = command.Id,
+            OrganizationId = id,
             IsOwner = true,
             UserId = _currentUser.Id,
             Organization = new()
             {
-                Id = command.Id
+                Id = id,
+                Title = "Test"
             }
         };
         _context.Add(membership);
         await _context.SaveChangesAsync();
 
         // Act
-        await _handler.Handle(command, default);
-        var expected = await _context.Organizations
-            .FirstOrDefaultAsync(p => p.Id == command.Id);
+        await _handler.Handle(expected, default);
+        var actual = await _context.Organizations
+            .FirstOrDefaultAsync(p => p.Id == id);
 
         // Assert
-        expected.Should().BeNull();
+        actual.Should().NotBeNull();
+        actual.Title.Should().Be(expected.Title);
     }
 
     [Theory, FixtureData]
-    public async Task DeleteOrganization_WrongId_ShouldThrowError(DeleteOrganizationCommand command)
+    public async Task UpdateOrganization_WrongId_ShouldThrowError(UpdateOrganizationCommand command, long id)
     {
-        // Arrange
+        // Assert
 
         // Act
         var task = async () => await _handler.Handle(command, default);
@@ -58,17 +61,19 @@ public class DeleteOrganizationCommandHandlerTests : IClassFixture<ContextInitia
     }
 
     [Theory, FixtureData]
-    public async Task DeleteOrganization_NotOwner_ShouldThrowError(DeleteOrganizationCommand command)
+    public async Task UpdateOrganization_NotOwner_ShouldThrowError(UpdateOrganizationCommand command, long id)
     {
         // Arrange
+        command.SetId(id);
         Membership membership = new()
         {
-            OrganizationId = command.Id,
+            OrganizationId = id,
             IsOwner = false,
             UserId = _currentUser.Id,
             Organization = new()
             {
-                Id = command.Id
+                Id = id,
+                Title = "Test"
             }
         };
         _context.Add(membership);

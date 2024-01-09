@@ -21,7 +21,7 @@ public class DeleteOrganizationCommandHandler : IRequestHandler<DeleteOrganizati
         var entity = await _context.Set<Membership>()
         .Where(p =>
                 p.UserId == _currentUser.Id &&
-                p.Id == request.Id)
+                p.OrganizationId == request.Id)
             .Include(p => p.Organization)
             .FirstOrDefaultAsync(cancellationToken);
         if (entity is null)
