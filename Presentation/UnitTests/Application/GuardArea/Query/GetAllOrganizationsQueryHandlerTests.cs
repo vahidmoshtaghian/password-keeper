@@ -18,7 +18,7 @@ public class GetAllOrganizationsQueryHandlerTests : IClassFixture<ContextInitial
     }
 
     [Fact]
-    public async Task GetAll_WithoutSearch_ShouldReturnData()
+    public async Task GetAllOrganizations_WithoutSearch_ShouldReturnData()
     {
         // Arrange
         GetAllOrganizationsQuery query = new()
@@ -65,7 +65,7 @@ public class GetAllOrganizationsQueryHandlerTests : IClassFixture<ContextInitial
     }
 
     [Theory, FixtureData]
-    public async Task GetAll_WithSearch_ShouldReturnData(GetAllOrganizationsQuery query)
+    public async Task GetAllOrganizations_WithSearch_ShouldReturnData(GetAllOrganizationsQuery query)
     {
         // Arrange
         query.Page = 1;
