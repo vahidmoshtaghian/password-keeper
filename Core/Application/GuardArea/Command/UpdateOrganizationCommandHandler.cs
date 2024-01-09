@@ -21,7 +21,7 @@ public class UpdateOrganizationCommandHandler : IRequestHandler<UpdateOrganizati
         var entity = await _context.Set<Membership>()
             .Where(p =>
                 p.UserId == _currentUser.Id &&
-                p.Id == request.Id)
+                p.OrganizationId == request.Id)
             .Include(p => p.Organization)
             .FirstOrDefaultAsync(cancellationToken);
         if (entity is null)
@@ -40,7 +40,7 @@ public class UpdateOrganizationCommandHandler : IRequestHandler<UpdateOrganizati
 
 public class UpdateOrganizationCommand : IRequest
 {
-    internal long Id { get; set; }
+    public long Id { get; private set; }
     public string Title { get; set; }
 
     public void SetId(long id)

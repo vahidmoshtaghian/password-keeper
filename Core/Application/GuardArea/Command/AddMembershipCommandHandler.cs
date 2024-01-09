@@ -30,7 +30,7 @@ public class AddMembershipCommandHandler : IRequestHandler<AddMembershipCommand>
         var exists = await _context.Set<Membership>()
             .AnyAsync(p =>
                 p.UserId == user.Id &&
-                p.OrganizationId == request.Id, cancellationToken);
+                p.OrganizationId == request.OrganizationId, cancellationToken);
         if (exists)
             throw new AlreadyMemberException();
 
@@ -38,7 +38,7 @@ public class AddMembershipCommandHandler : IRequestHandler<AddMembershipCommand>
             .AnyAsync(p =>
                 p.IsOwner &&
                 p.UserId == _currentUser.Id &&
-                p.OrganizationId == request.Id, cancellationToken);
+                p.OrganizationId == request.OrganizationId, cancellationToken);
         if (!isOwner)
             throw new OwnerException();
 
@@ -51,8 +51,8 @@ public class AddMembershipCommandHandler : IRequestHandler<AddMembershipCommand>
 
 public class AddMembershipCommand : IRequest
 {
-    public long Id { get; set; }
+    public long OrganizationId { get; set; }
     public long FriendId { get; set; }
 
-    internal Membership MapToDomain(User user) => new() { User = user, OrganizationId = Id };
+    internal Membership MapToDomain(User user) => new() { User = user, OrganizationId = OrganizationId };
 }
